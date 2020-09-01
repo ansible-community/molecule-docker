@@ -23,6 +23,7 @@ jobs:
           - tox_env: lint
           - tox_env: docs
           - tox_env: py36
+<<<<<<< HEAD
             PREFIX: PYTEST_REQPASS=432
           - tox_env: py37
             PREFIX: PYTEST_REQPASS=432
@@ -30,6 +31,14 @@ jobs:
             PREFIX: PYTEST_REQPASS=432
           - tox_env: packaging
           - tox_env: dockerfile
+=======
+            PREFIX: PYTEST_REQPASS=1
+          - tox_env: py37
+            PREFIX: PYTEST_REQPASS=1
+          - tox_env: py38
+            PREFIX: PYTEST_REQPASS=1
+          - tox_env: packaging
+>>>>>>> 204b187... Initial commit
 
     steps:
       - uses: actions/checkout@v1
