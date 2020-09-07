@@ -17,7 +17,7 @@ Molecule Docker Plugin
    :target: LICENSE
    :alt: Repository License
 
-Molecule Docker Plugin is designed to allow use Docker containres for
+Molecule Docker Plugin is designed to allow use docker containers for
 provisioning test resources.
 
 Please note that this driver is currently in its early stage of development.

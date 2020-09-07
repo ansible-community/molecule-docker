@@ -21,24 +21,14 @@ jobs:
       matrix:
         include:
           - tox_env: lint
-          - tox_env: docs
+          # - tox_env: docs
           - tox_env: py36
-<<<<<<< HEAD
-            PREFIX: PYTEST_REQPASS=432
+            PREFIX: PYTEST_REQPASS=2
           - tox_env: py37
-            PREFIX: PYTEST_REQPASS=432
+            PREFIX: PYTEST_REQPASS=2
           - tox_env: py38
-            PREFIX: PYTEST_REQPASS=432
+            PREFIX: PYTEST_REQPASS=2
           - tox_env: packaging
-          - tox_env: dockerfile
-=======
-            PREFIX: PYTEST_REQPASS=1
-          - tox_env: py37
-            PREFIX: PYTEST_REQPASS=1
-          - tox_env: py38
-            PREFIX: PYTEST_REQPASS=1
-          - tox_env: packaging
->>>>>>> 204b187... Initial commit
 
     steps:
       - uses: actions/checkout@v1
@@ -61,6 +51,8 @@ jobs:
           python-version: ${{ steps.py_ver.outputs.version }}
       - name: Install dependencies
         run: |
+          docker version
+          docker info
           python -m pip install -U pip
           pip install tox
       - name: Run tox -e ${{ matrix.tox_env }}
