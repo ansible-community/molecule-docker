@@ -13,6 +13,10 @@ skip-string-normalization = false
 
 [tool.isort]
 profile = "black"
+float_to_top = true
+known_third_party = [
+  "molecule"
+]
 
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
