@@ -32,15 +32,13 @@
       register: dockerfile_stats
 
     - name: Create Dockerfiles from image names
-      vars:
-        # TODO(ssbarnea): expose module dir so it can also be used by plugins
-        molecule_module_directory: "{{ playbook_dir + '/../../../..' }}"
       template:
+        # when using embedded playbooks the dockerfile is alonside them
         src: >-
           {%- if dockerfile_stats.results[i].stat.exists -%}
           {{ molecule_scenario_directory + '/' + (item.dockerfile | default( 'Dockerfile.j2')) }}
           {%- else -%}
-          {{ molecule_module_directory + '/data/Dockerfile.j2' }}
+          {{ playbook_dir + '/Dockerfile.j2' }}
           {%- endif -%}
         dest: "{{ molecule_ephemeral_directory }}/Dockerfile_{{ item.image | regex_replace('[^a-zA-Z0-9_]', '_') }}"
         mode: "0600"
