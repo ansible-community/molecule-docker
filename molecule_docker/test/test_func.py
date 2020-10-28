@@ -25,7 +25,8 @@ def test_command_init_scenario(temp_dir, DRIVER):
     """Verify that init scenario works."""
     role_directory = os.path.join(temp_dir.strpath, "test-init")
     cmd = ["molecule", "init", "role", "test-init"]
-    run_command(cmd)
+    result = run_command(cmd)
+    assert result.returncode == 0
 
     with change_dir_to(role_directory):
         molecule_directory = pytest.helpers.molecule_directory()
@@ -38,12 +39,14 @@ def test_command_init_scenario(temp_dir, DRIVER):
             "test-scenario",
             *util.dict2args(options),
         ]
-        run_command(cmd)
+        result = run_command(cmd)
+        assert result.returncode == 0
 
         assert os.path.isdir(scenario_directory)
 
         cmd = ["molecule", "--debug", "test", "-s", "test-scenario"]
-        run_command(cmd)
+        result = run_command(cmd)
+        assert result.returncode == 0
 
 
 def test_dockerfile():
