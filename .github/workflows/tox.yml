@@ -1,15 +1,16 @@
 name: tox
 
 on:
-  create:  # is used for publishing to PyPI and TestPyPI
+  create:  # is used for publishing to TestPyPI
     tags:  # any tag regardless of its name, no branches
       - "**"
   push:  # only publishes pushes to the main branch to TestPyPI
     branches:  # any integration branch but not tag
       - "master"
-    tags-ignore:
-      - "**"
   pull_request:
+  release:
+    types:
+      - published  # It seems that you can publish directly without creating
   schedule:
     - cron: 1 0 * * *  # Run daily at 0:01 UTC
 
@@ -87,7 +88,7 @@ jobs:
       - name: Check out src from Git
         uses: actions/checkout@v2
         with:
-          # Get shallow Git history (default) for tag creation events
+          # Get shallow Git history (default) for release events
           # but have a complete clone for any other workflows.
           # Both options fetch tags but since we're going to remove
           # one from HEAD in non-create-tag workflows, we need full
@@ -95,15 +96,21 @@ jobs:
           fetch-depth: >-
             ${{
               (
-                github.event_name == 'create' &&
-                github.event.ref_type == 'tag'
+                (
+                  github.event_name == 'create' &&
+                  github.event.ref_type == 'tag'
+                ) ||
+                github.event_name == 'release'
               ) &&
               1 || 0
             }}
-      - name: Drop Git tags from HEAD for non-tag-create events
+      - name: Drop Git tags from HEAD for non-tag-create and non-release events
         if: >-
-          github.event_name != 'create' ||
-          github.event.ref_type != 'tag'
+          (
+            github.event_name != 'create' ||
+            github.event.ref_type != 'tag'
+          ) &&
+          github.event_name != 'release'
         run: >-
           git tag --points-at HEAD
           |
@@ -128,8 +135,7 @@ jobs:
           repository_url: https://test.pypi.org/legacy/
       - name: Publish to pypi.org
         if: >-  # "create" workflows run separately from "push" & "pull_request"
-          github.event_name == 'create' &&
-          github.event.ref_type == 'tag'
+          github.event_name == 'release'
         uses: pypa/gh-action-pypi-publish@master
         with:
           password: ${{ secrets.pypi_password }}
