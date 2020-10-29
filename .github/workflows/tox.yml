@@ -40,6 +40,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update \
+          && sudo apt-get install -y  ansible \
+          && ansible-doc -l | grep docker_container
       - name: Find python version
         id: py_ver
         shell: python
