@@ -4,7 +4,8 @@ import subprocess
 
 import pytest
 from molecule import logger, util
-from molecule.test.conftest import change_dir_to, run_command
+from molecule.test.conftest import change_dir_to
+from molecule.util import run_command
 
 import molecule_docker
 
