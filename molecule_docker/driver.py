@@ -127,7 +127,7 @@ class Docker(Driver):
 
     When attempting to utilize a container image with `systemd`_ as your init
     system inside the container to simulate a real machine, make sure to set
-    the ``privileged``, ``volumes``, ``command``, and ``environment``
+    the ``privileged``, ``volumes``, ``command``, and ``env``
     values. An example using the ``centos:8`` image is below:
 
     .. note:: Do note that running containers in privileged mode is considerably
@@ -150,7 +150,7 @@ class Docker(Driver):
             - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
           command: "/usr/sbin/init"
           tty: True
-          environment:
+          env:
             container: docker
 
     .. code-block:: bash
