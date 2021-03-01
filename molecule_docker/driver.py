@@ -196,14 +196,35 @@ class Docker(Driver):
 
     @property
     def login_cmd_template(self):
-        return (
-            "docker exec "
-            "-e COLUMNS={columns} "
-            "-e LINES={lines} "
-            "-e TERM=bash "
-            "-e TERM=xterm "
-            "-ti {instance} bash"
-        )
+        try:
+            import docker
+            import requests
+
+            docker_client = docker.from_env()
+            info = docker_client.info()
+            if info["OSType"].lower() == "windows":
+              return (
+                "docker exec "
+                "-e COLUMNS={columns} "
+                "-e LINES={lines} "
+                "-ti {instance} cmd"
+              )
+            else:
+              return (
+                "docker exec "
+                "-e COLUMNS={columns} "
+                "-e LINES={lines} "
+                "-e TERM=bash "
+                "-e TERM=xterm "
+                "-ti {instance} bash"
+              )
+        except requests.exceptions.ConnectionError:
+            msg = (
+                "Unable to contact the Docker daemon. "
+                "Please refer to https://docs.docker.com/config/daemon/ "
+                "for managing the daemon"
+            )
+            sysexit_with_message(msg)
 
     @property
     def default_safe_files(self):
