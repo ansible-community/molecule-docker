@@ -203,21 +203,21 @@ class Docker(Driver):
             docker_client = docker.from_env()
             info = docker_client.info()
             if info["OSType"].lower() == "windows":
-              return (
-                "docker exec "
-                "-e COLUMNS={columns} "
-                "-e LINES={lines} "
-                "-ti {instance} cmd"
-              )
+                return (
+                    "docker exec "
+                    "-e COLUMNS={columns} "
+                    "-e LINES={lines} "
+                    "-ti {instance} cmd"
+                )
             else:
-              return (
-                "docker exec "
-                "-e COLUMNS={columns} "
-                "-e LINES={lines} "
-                "-e TERM=bash "
-                "-e TERM=xterm "
-                "-ti {instance} bash"
-              )
+                return (
+                    "docker exec "
+                    "-e COLUMNS={columns} "
+                    "-e LINES={lines} "
+                    "-e TERM=bash "
+                    "-e TERM=xterm "
+                    "-ti {instance} bash"
+                )
         except requests.exceptions.ConnectionError:
             msg = (
                 "Unable to contact the Docker daemon. "
