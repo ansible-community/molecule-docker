@@ -39,7 +39,7 @@ jobs:
       - name: Set tox envlist
         run: echo "envlist=py$(echo ${{ matrix.python }} | tr -d '.')-${{ matrix.molecule }}" >> $GITHUB_ENV
       - run: python -m pip install tox
-      - run: python -m tox -e ${{ env.envlist }}
+      - run: PYTEST_REQPASS=3 python -m tox -e ${{ env.envlist }}
 
   Publish:
     needs: [Base, Test]
