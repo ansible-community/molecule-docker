@@ -19,7 +19,9 @@
         cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem')  if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         key_path: "{{ item.key_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/key.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         tls_verify: "{{ item.tls_verify | default(lookup('env', 'DOCKER_TLS_VERIFY')) or false }}"
-      with_items: "{{ molecule_yml.platforms }}"
+      loop: "{{ molecule_yml.platforms }}"
+      loop_control:
+        label: "{{ item.registry | default('No registry defined') }}"
       when:
         - item.registry is defined
         - item.registry.credentials is defined
@@ -29,6 +31,8 @@
       stat:
         path: "{{ molecule_scenario_directory + '/' + (item.dockerfile | default( 'Dockerfile.j2')) }}"
       loop: "{{ molecule_yml.platforms }}"
+      loop_control:
+        label: "{{ item.dockerfile | default('Dockerfile.j2') }}"
       register: dockerfile_stats
 
     - name: Create Dockerfiles from image names
@@ -45,6 +49,7 @@
       loop: "{{ molecule_yml.platforms }}"
       loop_control:
         index_var: i
+        label: "{{ item.dockerfile | default('Using pre_build_iamge') }}"
       when: not item.pre_build_image | default(false)
       register: platforms
 
@@ -56,7 +61,9 @@
         cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem')  if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         key_path: "{{ item.key_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/key.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         tls_verify: "{{ item.tls_verify | default(lookup('env', 'DOCKER_TLS_VERIFY')) or false }}"
-      with_items: "{{ platforms.results }}"
+      loop: "{{ platforms.results }}"
+      loop_control:
+        label: "{{ item.item.name | default('Using pre_build_image') }}"
       when:
         - not item.pre_build_image | default(false)
       register: docker_images
@@ -92,7 +99,7 @@
     - name: Create docker network(s)
       action: docker_network
       args: "{{ item }}"
-      with_items: "{{ molecule_yml.platforms | molecule_get_docker_networks('present', molecule_labels) }}"
+      loop: "{{ molecule_yml.platforms | molecule_get_docker_networks('present', molecule_labels) }}"
       loop_control:
         label: "{{ item.name }}"
       no_log: false
@@ -103,7 +110,9 @@
           {{ command_directives_dict | default({}) |
              combine({ item.name: item.command | default('bash -c "while true; do sleep 10000; done"') })
           }}
-      with_items: "{{ molecule_yml.platforms }}"
+      loop: "{{ molecule_yml.platforms }}"
+      loop_control:
+        label: "{{ item.command | default('No command set') }}"
       when: item.override_command | default(true)
 
     - name: Create molecule instance(s)
@@ -148,7 +157,7 @@
         labels: "{{ molecule_labels | combine(item.labels | default({})) }}"
         container_default_behavior: "{{ item.container_default_behavior | default('compatibility' if ansible_version.full is version_compare('2.10', '>=') else omit) }}"
       register: server
-      with_items: "{{ molecule_yml.platforms }}"
+      loop: "{{ molecule_yml.platforms }}"
       loop_control:
         label: "{{ item.name }}"
       no_log: false
@@ -161,4 +170,6 @@
       register: docker_jobs
       until: docker_jobs.finished
       retries: 300
-      with_items: "{{ server.results }}"
+      loop: "{{ server.results }}"
+      loop_control:
+        label: "{{ item.item.name }}"
