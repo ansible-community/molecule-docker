@@ -24,9 +24,7 @@ def get_docker_networks(data, labels={}):
                 if "name" in network:
                     name = network["name"]
                     if name not in network_names:
-                        network_list.append(
-                            {"name": name, "labels": labels}
-                        )
+                        network_list.append({"name": name, "labels": labels})
     return network_list
 
 
