@@ -1,7 +1,7 @@
 """Embedded ansible filter used by Molecule Docker driver create playbook."""
 
 
-def get_docker_networks(data, state, labels={}):
+def get_docker_networks(data, labels={}):
     """Get list of docker networks."""
     network_list = []
     network_names = []
@@ -12,8 +12,6 @@ def get_docker_networks(data, state, labels={}):
                     docker_network["labels"] = {}
                 for key in labels:
                     docker_network["labels"][key] = labels[key]
-
-                docker_network["state"] = state
 
                 if "name" in docker_network:
                     network_list.append(docker_network)
@@ -27,7 +25,7 @@ def get_docker_networks(data, state, labels={}):
                     name = network["name"]
                     if name not in network_names:
                         network_list.append(
-                            {"name": name, "labels": labels, "state": state}
+                            {"name": name, "labels": labels}
                         )
     return network_list
 
