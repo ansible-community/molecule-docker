@@ -90,12 +90,39 @@
       delay: 30
 
     - name: Create docker network(s)
-      action: docker_network
-      args: "{{ item }}"
-      with_items: "{{ molecule_yml.platforms | molecule_get_docker_networks('present', molecule_labels) }}"
+      docker_network:
+        api_version: "{{ item.api_version | default(omit) }}"
+        appends: "{{ item.appends | default(omit) }}"
+        attachable: "{{ item.attachable | default(omit) }}"
+        ca_cert: "{{ item.ca_cert | default(omit) }}"
+        client_cert: "{{ item.client_cert | default(omit) }}"
+        client_key: "{{ item.client_key | default(omit) }}"
+        connected: "{{ item.connected | default(omit) }}"
+        debug: "{{ item.debug | default(omit) }}"
+        docker_host: "{{ item.docker_host | default(omit) }}"
+        driver: "{{ item.driver | default(omit) }}"
+        driver_options: "{{ item.driver_options | default(omit) }}"
+        enable_ipv6: "{{ item.enable_ipv6 | default(omit) }}"
+        force: "{{ item.force | default(omit) }}"
+        internal: "{{ item.internal | default(omit) }}"
+        ipam_config: "{{ item.ipam_config | default(omit) }}"
+        ipam_driver: "{{ item.ipam_driver | default(omit) }}"
+        ipam_driver_options: "{{ item.ipam_driver_options | default(omit) }}"
+        key_path: "{{ item.key_path | default(omit) }}"
+        labels: "{{ item.labels }}"
+        name: "{{ item.name }}"
+        scope: "{{ item.scope | default(omit) }}"
+        ssl_version: "{{ item.ssl_version | default(omit) }}"
+        state: "present"
+        timeout: "{{ item.timeout | default(omit) }}"
+        tls: "{{ item.tls | default(omit) }}"
+        tls_hostname: "{{ item.tls_hostname | default(omit) }}"
+        validate_certs: "{{ item.validate_certs | default(omit) }}"
+      with_items: "{{ molecule_yml.platforms | molecule_get_docker_networks(molecule_labels) }}"
       loop_control:
         label: "{{ item.name }}"
       no_log: false
+
 
     - name: Determine the CMD directives
       set_fact:
