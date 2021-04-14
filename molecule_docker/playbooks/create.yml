@@ -67,7 +67,7 @@
         - not item.item.pre_build_image | default(false)
       docker_image:
         build:
-          path: "{{ molecule_ephemeral_directory }}"
+          path: "{{ item.item.context | default(molecule_ephemeral_directory) }}"
           dockerfile: "{{ item.invocation.module_args.dest }}"
           pull: "{{ item.item.pull | default(true) }}"
           network: "{{ item.item.network_mode | default(omit) }}"
