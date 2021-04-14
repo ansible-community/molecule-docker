@@ -159,6 +159,7 @@
         devices: "{{ item.devices | default(omit) }}"
         links: "{{ item.links | default(omit) }}"
         volumes: "{{ item.volumes | default(omit) }}"
+        mounts: "{{ item.mounts | default(omit) }}"
         tmpfs: "{{ item.tmpfs | default(omit) }}"
         capabilities: "{{ item.capabilities | default(omit) }}"
         sysctls: "{{ item.sysctls | default(omit) }}"
