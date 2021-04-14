@@ -157,6 +157,7 @@
         privileged: "{{ item.privileged | default(omit) }}"
         security_opts: "{{ item.security_opts | default(omit) }}"
         devices: "{{ item.devices | default(omit) }}"
+        links: "{{ item.links | default(omit) }}"
         volumes: "{{ item.volumes | default(omit) }}"
         tmpfs: "{{ item.tmpfs | default(omit) }}"
         capabilities: "{{ item.capabilities | default(omit) }}"
