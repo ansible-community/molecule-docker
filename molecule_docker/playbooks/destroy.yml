@@ -36,9 +36,10 @@
       with_items: "{{ server.results }}"
 
     - name: Delete docker network(s)
-      action: docker_network
-      args: "{{ item }}"
-      with_items: "{{ molecule_yml.platforms | molecule_get_docker_networks('absent') }}"
+      docker_network:
+        name: "{{ item.name }}"
+        state: "absent"
+      with_items: "{{ molecule_yml.platforms | molecule_get_docker_networks() }}"
       loop_control:
         label: "{{ item.name }}"
       no_log: false
