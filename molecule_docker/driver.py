@@ -58,6 +58,7 @@ class Docker(Driver):
             image: image_name:tag
             dockerfile: Dockerfile.j2
             pull: True|False
+            path: /path/to_docker/build/context
             pre_build_image: True|False
             registry:
               url: registry.example.com
