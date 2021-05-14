@@ -8,9 +8,9 @@
     molecule_labels:
       owner: molecule
   tasks:
-    - name: Cleanup Dockerfiles 
+    - name: Cleanup Dockerfiles
       file:
         state: absent
         path: "{{ item.path }}/Dockerfile_{{ item.image | regex_replace('[^a-zA-Z0-9_]', '_') }}"
-      when: item.path
+      when: item.path is defined
       loop: "{{ molecule_yml.platforms }}"
