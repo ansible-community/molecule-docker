@@ -1,0 +1,16 @@
+---
+- name: Cleanup
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  no_log: "{{ molecule_no_log }}"
+  vars:
+    molecule_labels:
+      owner: molecule
+  tasks:
+    - name: Cleanup Dockerfiles
+      file:
+        state: absent
+        path: "{{ item.path }}/Dockerfile_{{ item.image | regex_replace('[^a-zA-Z0-9_]', '_') }}"
+      when: item.path is defined
+      loop: "{{ molecule_yml.platforms }}"
