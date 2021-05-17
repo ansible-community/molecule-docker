@@ -39,6 +39,7 @@
       docker_network:
         name: "{{ item.name }}"
         state: "absent"
+        docker_host: "{{ item.docker_host | default(lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock') }}"
       loop: "{{ molecule_yml.platforms | molecule_get_docker_networks('absent') }}"
       loop_control:
         label: "{{ item.name }}"
