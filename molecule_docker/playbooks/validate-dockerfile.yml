@@ -3,6 +3,8 @@
 - hosts: localhost
   connection: local
   gather_facts: false
+  collections:
+    - community.docker
   vars:
     platforms:
       # platforms supported as being managed by molecule/ansible, this does

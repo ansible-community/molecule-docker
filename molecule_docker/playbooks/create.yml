@@ -7,6 +7,8 @@
   vars:
     molecule_labels:
       owner: molecule
+  collections:
+    - community.docker
   tasks:
     - name: Log into a Docker registry
       docker_login:
