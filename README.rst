@@ -22,6 +22,15 @@ provisioning test resources.
 
 Please note that this driver is currently in its early stage of development.
 
+This plugin will function only if you also install `community.docker` ansible
+collection. Keep in mind that this requires newer version of docker python
+module which may not come with system-packaged versions of ansible like
+Ubuntu ones.
+
+Please do not file bugs towards molecule or this plugin if Ansible fails to
+execute any docker modules (missing or incorrect versions of docker or requests
+python modules). Instead file them on [community.docker](https://github.com/ansible-collections/community.docker)
+
 .. _get-involved:
 
 Get Involved
