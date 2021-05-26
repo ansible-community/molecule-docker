@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: foo
+    # keep this here to avoid regressions with molecule substitutions
+    image: ${MOLECULE_IMAGE:-docker.io/pycontribs/centos:8}
+    # while above image is already pre-build we want to force molecule
+    # to rebuild it, just to detect a possible regression on that area
+    # the pre_build=true case is already covered by the dynamic test
+    pre_build_image: false
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

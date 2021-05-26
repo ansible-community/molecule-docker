@@ -1,0 +1,10 @@
+---
+- name: Converge
+  hosts: all
+  # keep gather on here to ensure we can gather
+  gather_facts: true
+  tasks:
+    - name: Display info
+      debug:
+        msg: >
+          {{ ansible_distribution }}-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}

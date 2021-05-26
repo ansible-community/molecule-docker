@@ -45,3 +45,11 @@ def test_command_init_and_test_scenario(temp_dir, DRIVER):
         cmd = ["molecule", "--debug", "test", "-s", "test-scenario"]
         result = run_command(cmd)
         assert result.returncode == 0
+
+
+def test_command_static_scenario() -> None:
+    """Validate that the scenario we included with code still works."""
+    cmd = ["molecule", "test"]
+
+    result = run_command(cmd)
+    assert result.returncode == 0

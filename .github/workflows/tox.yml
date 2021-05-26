@@ -29,16 +29,16 @@ jobs:
           # - tox_env: docs
           - name: py36
             tox_env: py36-2.9,py36-2.10,py36-2.11
-            PREFIX: PYTEST_REQPASS=2
+            PREFIX: PYTEST_REQPASS=3
           - name: py37
             tox_env: py37-2.9,py37-2.10,py37-2.11
-            PREFIX: PYTEST_REQPASS=2
+            PREFIX: PYTEST_REQPASS=3
           - name: py38
             tox_env: py38-2.9,py38-2.10,py38-2.11
-            PREFIX: PYTEST_REQPASS=2
+            PREFIX: PYTEST_REQPASS=3
           - name: py39
             tox_env: py39-2.9,py39-2.10,py39-2.11
-            PREFIX: PYTEST_REQPASS=2
+            PREFIX: PYTEST_REQPASS=3
           - tox_env: packaging
 
     steps:
