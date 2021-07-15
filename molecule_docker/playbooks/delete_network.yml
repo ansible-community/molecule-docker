@@ -7,4 +7,4 @@
   community.docker.docker_network:
     name: "{{ item.name }}"
     state: "absent"
-  when: docker_netname.exists and 'owner' in docker_netname.labels and docker_netname.labels.owner == 'molecule'
+  when: docker_netname.exists and 'owner' in docker_netname.network.Labels and docker_netname.network.Labels.owner == 'molecule'

@@ -32,4 +32,4 @@
     tls: "{{ item.tls | default(omit) }}"
     tls_hostname: "{{ item.tls_hostname | default(omit) }}"
     validate_certs: "{{ item.validate_certs | default(omit) }}"
-    when: not docker_netname.exists
+  when: not docker_netname.exists
