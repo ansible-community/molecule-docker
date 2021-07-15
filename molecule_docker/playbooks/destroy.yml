@@ -37,10 +37,8 @@
       loop_control:
         label: "{{ item.item.name }}"
 
-    - name: Delete docker network(s)
-      docker_network:
-        name: "{{ item.name }}"
-        state: "absent"
+    - name: Delete docker networks(s)
+      include_tasks: delete_network.yml
       loop: "{{ molecule_yml.platforms | molecule_get_docker_networks('absent') }}"
       loop_control:
         label: "{{ item.name }}"
