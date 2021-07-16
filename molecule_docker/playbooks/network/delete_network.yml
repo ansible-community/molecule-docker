@@ -1,5 +1,5 @@
 - name: Retrieve network info
-  community.docker.docker_network_info:
+  docker_network_info:
     name: "{{ item.name }}"
   register: docker_netname
 
