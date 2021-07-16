@@ -31,6 +31,7 @@
       template:
         src: Dockerfile.j2
         dest: "{{ temp_dockerfiles.results[index].path }}"
+        mode: 0600
       register: result
       with_items: "{{ platforms }}"
       loop_control:
@@ -58,6 +59,9 @@
       file:
         path: "{{ item }}"
         state: absent
+        mode: 0600
       loop: "{{ temp_dockerfiles.results | map(attribute='path') | list }}"
 
-    - debug: var=result
+    - name: Display results
+      debug:
+        var: result
