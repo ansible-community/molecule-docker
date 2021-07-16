@@ -34,13 +34,15 @@ repos:
           - flake8-black>=0.1.1
           - flake8-docstrings>=1.5.0
         language_version: python3
-  - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.25.0
+  - repo: https://github.com/ansible/ansible-lint.git
+    rev: v5.0.12
     hooks:
-      - id: yamllint
-        files: \.(yaml|yml)$
-        types: [file, yaml]
-        entry: yamllint --strict
+      - id: ansible-lint
+        always_run: true
+        pass_filenames: false
+        additional_dependencies:
+          - ansible>=2.9
+          - yamllint
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.790
     hooks:
