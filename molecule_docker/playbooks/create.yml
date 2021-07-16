@@ -93,7 +93,7 @@
       delay: 30
 
     - name: Create docker network(s)
-      include_tasks: network/create_network.yml
+      include_tasks: tasks/create_network.yml
       with_items: "{{ molecule_yml.platforms | molecule_get_docker_networks(molecule_labels) }}"
       loop_control:
         label: "{{ item.name }}"

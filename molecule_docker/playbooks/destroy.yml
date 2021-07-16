@@ -38,7 +38,7 @@
         label: "{{ item.item.name }}"
 
     - name: Delete docker networks(s)
-      include_tasks: network/delete_network.yml
+      include_tasks: tasks/delete_network.yml
       loop: "{{ molecule_yml.platforms | molecule_get_docker_networks('absent') }}"
       loop_control:
         label: "{{ item.name }}"
