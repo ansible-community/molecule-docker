@@ -1,5 +1,5 @@
 - name: Retrieve network info
-  docker_network_info:
+  community.docker.docker_network_info:
     name: "{{ item.name }}"
   register: docker_netname
 
@@ -7,4 +7,7 @@
   community.docker.docker_network:
     name: "{{ item.name }}"
     state: "absent"
-  when: docker_netname.exists and 'owner' in docker_netname.network.Labels and docker_netname.network.Labels.owner == 'molecule'
+  when:
+    - docker_netname.exists
+    - docker_netname.network.Labels.owner is not defined
+    - docker_netname.network.Labels.owner == 'molecule'
