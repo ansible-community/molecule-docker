@@ -9,7 +9,7 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/python/black.git
-    rev: 21.6b0
+    rev: 21.7b0
     hooks:
       - id: black
         language_version: python3
@@ -29,10 +29,9 @@ repos:
     hooks:
       - id: flake8
         additional_dependencies:
-          - pydocstyle>=5.1.1
-          - flake8-absolute-import
-          - flake8-black>=0.1.1
-          - flake8-docstrings>=1.5.0
+          - pydocstyle>=6.1.1
+          - flake8-absolute-import>=1.0
+          - flake8-docstrings>=1.6.0
         language_version: python3
   - repo: https://github.com/ansible/ansible-lint.git
     rev: v5.1.0a1
