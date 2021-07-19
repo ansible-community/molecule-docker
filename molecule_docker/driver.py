@@ -22,6 +22,7 @@
 from __future__ import absolute_import
 
 import os
+from typing import Dict
 
 from molecule import logger
 from molecule.api import Driver
@@ -254,3 +255,8 @@ class Docker(Driver):
         for n in client.networks.list(filters={"label": "owner=molecule"}):
             log.info("Removing docker network %s ...." % n.name)
             n.remove()
+
+    @property
+    def required_collections(self) -> Dict[str, str]:
+        """Return collections dict containing names and versions required."""
+        return {"community.docker": "1.8.0"}
