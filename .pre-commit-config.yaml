@@ -5,7 +5,7 @@ exclude: |
     )
 repos:
   - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v5.9.2
+    rev: v5.9.3
     hooks:
       - id: isort
   - repo: https://github.com/python/black.git
@@ -34,7 +34,7 @@ repos:
           - flake8-docstrings>=1.6.0
         language_version: python3
   - repo: https://github.com/ansible/ansible-lint.git
-    rev: v5.1.0a1
+    rev: v5.1.2
     hooks:
       - id: ansible-lint
         always_run: true
@@ -55,7 +55,7 @@ repos:
           - packaging
           - types-requests
   - repo: https://github.com/PyCQA/pylint
-    rev: v2.9.3
+    rev: v2.10.2
     hooks:
       - id: pylint
         additional_dependencies:
