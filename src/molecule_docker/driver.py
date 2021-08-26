@@ -24,9 +24,10 @@ from __future__ import absolute_import
 import os
 from typing import Dict
 
+from ansible_compat.ports import cache
 from molecule import logger
 from molecule.api import Driver
-from molecule.util import lru_cache, sysexit_with_message
+from molecule.util import sysexit_with_message
 
 log = logger.get_logger(__name__)
 
@@ -223,7 +224,7 @@ class Docker(Driver):
             x["ansible_docker_extra_args"] = "-H={}".format(os.environ["DOCKER_HOST"])
         return x
 
-    @lru_cache()
+    @cache
     def sanity_checks(self):
         """Implement Docker driver sanity checks."""
         log.info("Sanity checks: '{}'".format(self._name))
