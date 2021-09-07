@@ -9,5 +9,5 @@
     state: "absent"
   when:
     - docker_netname.exists
-    - docker_netname.network.Labels.owner is not defined
+    - docker_netname.network.Labels.owner is defined
     - docker_netname.network.Labels.owner == 'molecule'
