@@ -221,13 +221,13 @@ class Docker(Driver):
     def ansible_connection_options(self, instance_name):
         x = {"ansible_connection": "community.docker.docker"}
         if "DOCKER_HOST" in os.environ:
-            x["ansible_docker_extra_args"] = "-H={}".format(os.environ["DOCKER_HOST"])
+            x["ansible_docker_extra_args"] = f"-H={os.environ['DOCKER_HOST']}"
         return x
 
     @cache
     def sanity_checks(self):
         """Implement Docker driver sanity checks."""
-        log.info("Sanity checks: '{}'".format(self._name))
+        log.info("Sanity checks: '%s'", self._name)
 
         try:
             import docker
@@ -248,13 +248,13 @@ class Docker(Driver):
 
         client = docker.from_env()
         for c in client.containers.list(filters={"label": "owner=molecule"}):
-            log.info("Stopping docker container %s ..." % c.id)
+            log.info("Stopping docker container %s ...", c.id)
             c.stop(timeout=3)
         result = client.containers.prune(filters={"label": "owner=molecule"})
         for c in result.get("ContainersDeleted") or []:
-            log.info("Deleted container %s" % c)
+            log.info("Deleted container %s", c)
         for n in client.networks.list(filters={"label": "owner=molecule"}):
-            log.info("Removing docker network %s ...." % n.name)
+            log.info("Removing docker network %s ...", n.name)
             n.remove()
 
     @property
