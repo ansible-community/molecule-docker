@@ -4,14 +4,12 @@
   connection: local
   gather_facts: false
   no_log: "{{ molecule_no_log }}"
-  collections:
-    - community.docker
   vars:
     molecule_labels:
       owner: molecule
   tasks:
     - name: Log into a Docker registry
-      docker_login:
+      community.docker.docker_login:
         username: "{{ item.registry.credentials.username }}"
         password: "{{ item.registry.credentials.password }}"
         email: "{{ item.registry.credentials.email | default(omit) }}"
@@ -52,7 +50,7 @@
       register: platforms
 
     - name: Discover local Docker images
-      docker_image_info:
+      community.docker.docker_image_info:
         name: "molecule_local/{{ item.item.name }}"
         docker_host: "{{ item.item.docker_host | default(lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock') }}"
         cacert_path: "{{ item.cacert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/ca.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
@@ -68,7 +66,7 @@
       when:
         - platforms.changed or docker_images.results | map(attribute='images') | select('equalto', []) | list | count >= 0
         - not item.item.pre_build_image | default(false)
-      docker_image:
+      community.docker.docker_image:
         build:
           path: "{{ molecule_ephemeral_directory }}"
           dockerfile: "{{ item.invocation.module_args.dest }}"
@@ -109,7 +107,7 @@
       when: item.override_command | default(true)
 
     - name: Create molecule instance(s)
-      docker_container:
+      community.docker.docker_container:
         name: "{{ item.name }}"
         docker_host: "{{ item.docker_host | default(lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock') }}"
         cacert_path: "{{ item.cacert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/ca.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
