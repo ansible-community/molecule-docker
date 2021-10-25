@@ -15,11 +15,11 @@
   tasks:
 
     - name: Assure we have docker module installed
-      pip:
+      ansible.builtin.pip:
         name: docker
 
     - name: create temporary dockerfiles
-      tempfile:
+      ansible.builtin.tempfile:
         prefix: "molecule-dockerfile-{{ item.image }}"
         suffix: build
       register: temp_dockerfiles
@@ -28,7 +28,7 @@
         label: "{{ item.image }}"
 
     - name: expand Dockerfile templates
-      template:
+      ansible.builtin.template:
         src: Dockerfile.j2
         dest: "{{ temp_dockerfiles.results[index].path }}"
         mode: 0600
@@ -39,7 +39,7 @@
         label: "{{ item.image }}"
 
     - name: Test Dockerfile template
-      docker_image:
+      community.docker.docker_image:
         name: "{{ item.item.image }}"
         build:
           path: "."
@@ -56,12 +56,12 @@
       register: result
 
     - name: Clean up temporary Dockerfile's
-      file:
+      ansible.builtin.file:
         path: "{{ item }}"
         state: absent
         mode: 0600
       loop: "{{ temp_dockerfiles.results | map(attribute='path') | list }}"
 
     - name: Display results
-      debug:
+      ansible.builtin.debug:
         var: result

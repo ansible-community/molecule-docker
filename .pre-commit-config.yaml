@@ -1,4 +1,12 @@
 ---
+ci:
+  # this subsection applies to pre-commit.ci only, not our own CI
+  skip:
+    # As pre-commit.ci service does not allow network access from inside hooks,
+    # we need to skip running ansible-lint, which may need to download missing
+    # collections from galaxy. https://github.com/pre-commit-ci/issues/issues/55
+    # This
+    - ansible-lint
 exclude: |
     (?x)(
         ^docs/conf.py$
@@ -33,14 +41,15 @@ repos:
           - flake8-absolute-import>=1.0
           - flake8-docstrings>=1.6.0
         language_version: python3
-  - repo: https://github.com/ansible/ansible-lint.git
-    rev: v5.2.0
+  - repo: https://github.com/ansible-community/ansible-lint.git
+    rev: v5.2.1
     hooks:
       - id: ansible-lint
         always_run: true
         pass_filenames: false
+        verbose: true
         additional_dependencies:
-          - ansible>=2.9
+          - ansible-core>=2.11
           - yamllint
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.910-1
@@ -60,5 +69,5 @@ repos:
     hooks:
       - id: pylint
         additional_dependencies:
-          - ansible-base
+          - ansible-core>=2.11
           - molecule
