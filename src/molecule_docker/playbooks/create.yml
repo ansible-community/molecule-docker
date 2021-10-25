@@ -27,13 +27,13 @@
       no_log: true
 
     - name: Check presence of custom Dockerfiles
-      stat:
+      ansible.builtin.stat:
         path: "{{ molecule_scenario_directory + '/' + (item.dockerfile | default( 'Dockerfile.j2')) }}"
       loop: "{{ molecule_yml.platforms }}"
       register: dockerfile_stats
 
     - name: Create Dockerfiles from image names
-      template:
+      ansible.builtin.template:
         # when using embedded playbooks the dockerfile is alonside them
         src: >-
           {%- if dockerfile_stats.results[i].stat.exists -%}
@@ -91,14 +91,14 @@
       delay: 30
 
     - name: Create docker network(s)
-      include_tasks: tasks/create_network.yml
+      ansible.builtin.include_tasks: tasks/create_network.yml
       with_items: "{{ molecule_yml.platforms | molecule_get_docker_networks(molecule_labels) }}"
       loop_control:
         label: "{{ item.name }}"
       no_log: false
 
     - name: Determine the CMD directives
-      set_fact:
+      ansible.builtin.set_fact:
         command_directives_dict: >-
           {{ command_directives_dict | default({}) |
              combine({ item.name: item.command | default('bash -c "while true; do sleep 10000; done"') })
@@ -160,7 +160,7 @@
       poll: 0
 
     - name: Wait for instance(s) creation to complete
-      async_status:
+      ansible.builtin.async_status:
         jid: "{{ item.ansible_job_id }}"
       register: docker_jobs
       until: docker_jobs.finished

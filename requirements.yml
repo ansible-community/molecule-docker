@@ -1,0 +1,3 @@
+# helps ansible-lint install required collection when it is missing
+collections:
+  - community.docker
