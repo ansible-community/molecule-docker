@@ -56,7 +56,7 @@ License
 
 The `MIT`_ License.
 
-.. _`MIT`: https://github.com/ansible/molecule/blob/master/LICENSE
+.. _`MIT`: https://github.com/ansible/molecule/blob/main/LICENSE
 
 The logo is licensed under the `Creative Commons NoDerivatives 4.0 License`_.
 
