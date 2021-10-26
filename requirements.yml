@@ -1,3 +1,4 @@
 # helps ansible-lint install required collection when it is missing
 collections:
-  - community.docker
+  - name: community.docker
+    version: ">=1.9.1"
