@@ -1,0 +1,4 @@
+# helps ansible-lint install required collection when it is missing
+collections:
+  - name: community.docker
+    version: ">=1.9.1"

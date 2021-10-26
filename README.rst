@@ -29,7 +29,7 @@ Ubuntu ones.
 
 Please do not file bugs towards molecule or this plugin if Ansible fails to
 execute any docker modules (missing or incorrect versions of docker or requests
-python modules). Instead file them on [community.docker](https://github.com/ansible-collections/community.docker)
+python modules). Instead file them on `community.docker <https://github.com/ansible-collections/community.docker>`_.
 
 .. _get-involved:
 
