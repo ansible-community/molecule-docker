@@ -46,6 +46,35 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
+
+      - name: Find python version
+        id: py_ver
+        shell: python
+        run: |
+          v = '${{ matrix.tox_env }}'.split('-')[0].lstrip('py')
+          print('::set-output name=version::{0}.{1}'.format(v[0],v[1:]))
+
+      - name: Enable caching of ~/.cache/pip
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ steps.py_ver.outputs.version }}-${{ hashFiles('**/setup.cfg', 'tox.ini', '.github/workflows/tox.yml') }}
+
+      - name: Enable caching of ~/.cache/pre-commit
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ steps.py_ver.outputs.version }}-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Enable caching for ansible tools
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.ansible/collections
+            ~/.ansible/galaxy_cache
+            ~/.cache/ansible-compat
+          key: ${{ hashFiles('requirements.yml') }}
+
       - name: Install system dependencies
         # community.docker requires docker>=5.0.0 but ubuntu has older
         run: |
@@ -53,13 +82,7 @@ jobs:
           && sudo apt-get install -y ansible python3-docker python3-requests \
           && sudo pip3 install -U docker \
           && ansible-doc -l | grep docker_container
-      - name: Find python version
-        id: py_ver
-        shell: python
-        if: ${{ contains(matrix.tox_env, 'py') }}
-        run: |
-          v = '${{ matrix.tox_env }}'.split('-')[0].lstrip('py')
-          print('::set-output name=version::{0}.{1}'.format(v[0],v[1:]))
+
       # Even our lint and other envs need access to tox
       - name: Install a default Python
         uses: actions/setup-python@v2
