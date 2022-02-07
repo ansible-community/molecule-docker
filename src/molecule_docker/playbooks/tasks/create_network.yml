@@ -1,9 +1,9 @@
-- name: Check if network exist
+- name: "Check if network '{{ item.name }}' exists"
   community.docker.docker_network_info:
     name: "{{ item.name }}"
   register: docker_netname
 
-- name: Create docker network(s)
+- name: "Create docker network(s) '{{ item.name }}'"
   community.docker.docker_network:
     api_version: "{{ item.api_version | default(omit) }}"
     appends: "{{ item.appends | default(omit) }}"
