@@ -130,6 +130,7 @@
         privileged: "{{ item.privileged | default(omit) }}"
         security_opts: "{{ item.security_opts | default(omit) }}"
         devices: "{{ item.devices | default(omit) }}"
+        dns_search_domains: "{{ item.dns_search_domains | default(omit) }}"
         links: "{{ item.links | default(omit) }}"
         volumes: "{{ item.volumes | default(omit) }}"
         mounts: "{{ item.mounts | default(omit) }}"

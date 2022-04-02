@@ -11,7 +11,8 @@ platforms:
     # to rebuild it, just to detect a possible regression on that area
     # the pre_build=true case is already covered by the dynamic test
     pre_build_image: false
+    dns_search_domains: example.com
 provisioner:
   name: ansible
 verifier:
-  name: ansible
+  name: testinfra
