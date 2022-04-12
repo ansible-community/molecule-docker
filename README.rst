@@ -36,14 +36,14 @@ python modules). Instead file them on `community.docker <https://github.com/ansi
 Get Involved
 ============
 
-* Join us in the ``#ansible-molecule`` channel on `Libera`_.
+* Join us in the ``#ansible-devtools`` channel on `Libera`_.
 * Join the discussion in `molecule-users Forum`_.
 * Join the community working group by checking the `wiki`_.
 * Want to know about releases, subscribe to `ansible-announce list`_.
 * For the full list of Ansible email Lists, IRC channels see the
   `communication page`_.
 
-.. _`Libera`: https://web.libera.chat/?channel=#ansible-molecule
+.. _`Libera`: https://web.libera.chat/?channel=#ansible-devtools
 .. _`molecule-users Forum`: https://groups.google.com/forum/#!forum/molecule-users
 .. _`wiki`: https://github.com/ansible/community/wiki/Molecule
 .. _`ansible-announce list`: https://groups.google.com/group/ansible-announce
