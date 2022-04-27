@@ -28,7 +28,8 @@ jobs:
             tox_env: lint
           - name: dockerfile
             tox_env: dockerfile
-          # - tox_env: docs
+          - name: docs
+            tox_env: docs
           - name: py36
             tox_env: py36-2.9,py36-2.10,py36-2.11
             PREFIX: PYTEST_REQPASS=3
