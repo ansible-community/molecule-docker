@@ -56,7 +56,7 @@ def test_command_init_and_test_scenario(tmp_path: pathlib.Path, DRIVER: str) -> 
 
 def test_command_static_scenario() -> None:
     """Validate that the scenario we included with code still works."""
-    cmd = ["molecule", "test"]
+    cmd = ["molecule", "--debug", "test"]
 
     result = run_command(cmd)
     assert result.returncode == 0
