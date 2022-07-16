@@ -6,7 +6,7 @@ driver:
 platforms:
   - name: foo
     # keep this here to avoid regressions with molecule substitutions
-    image: ${MOLECULE_IMAGE:-docker.io/pycontribs/centos:8}
+    image: ${MOLECULE_IMAGE:-quay.io/centos/centos:stream8}
     # while above image is already pre-build we want to force molecule
     # to rebuild it, just to detect a possible regression on that area
     # the pre_build=true case is already covered by the dynamic test
