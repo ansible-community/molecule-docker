@@ -4,7 +4,6 @@ disable =
     # TODO(ssbarnea): remove temporary skips adding during initial adoption:
     abstract-method,
     arguments-differ,
-    bad-continuation,
     broad-except,
     consider-merging-isinstance,
     consider-using-in,

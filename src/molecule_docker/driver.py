@@ -224,7 +224,7 @@ class Docker(Driver):
             x["ansible_docker_extra_args"] = f"-H={os.environ['DOCKER_HOST']}"
         return x
 
-    @cache
+    @cache(maxsize=None)
     def sanity_checks(self):
         """Implement Docker driver sanity checks."""
         log.info("Sanity checks: '%s'", self._name)
