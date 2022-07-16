@@ -24,7 +24,6 @@ from __future__ import absolute_import
 import os
 from typing import Dict
 
-from ansible_compat.ports import cache
 from molecule import logger
 from molecule.api import Driver
 from molecule.util import sysexit_with_message
@@ -183,6 +182,8 @@ class Docker(Driver):
     .. _`CMD`: https://docs.docker.com/engine/reference/builder/#cmd
     """  # noqa
 
+    _passed_sanity = False
+
     def __init__(self, config=None):
         """Construct Docker."""
         super(Docker, self).__init__(config)
@@ -224,11 +225,12 @@ class Docker(Driver):
             x["ansible_docker_extra_args"] = f"-H={os.environ['DOCKER_HOST']}"
         return x
 
-    @cache(maxsize=None)
     def sanity_checks(self):
         """Implement Docker driver sanity checks."""
-        log.info("Sanity checks: '%s'", self._name)
+        if self._passed_sanity:
+            return
 
+        log.info("Sanity checks: '%s'", self._name)
         try:
             import docker
             import requests
@@ -242,6 +244,8 @@ class Docker(Driver):
                 "for managing the daemon"
             )
             sysexit_with_message(msg)
+
+        self._passed_sanity = True
 
     def reset(self):
         import docker
