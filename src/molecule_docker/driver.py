@@ -145,7 +145,7 @@ class Docker(Driver):
 
         platforms:
         - name: instance
-          image: centos:8
+          image: quay.io/centos/centos:stream8
           privileged: true
           volumes:
             - "/sys/fs/cgroup:/sys/fs/cgroup:rw"
