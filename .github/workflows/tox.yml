@@ -26,17 +26,22 @@ jobs:
         include:
           - name: lint
             tox_env: lint
+            python-version: 3.8
           - name: dockerfile
             tox_env: dockerfile
-          # - tox_env: docs
-          - name: py38
-            tox_env: py38-2.9,py38-2.10,py38-2.11
-            PREFIX: PYTEST_REQPASS=3
-          - name: py39
-            tox_env: py39-2.9,py39-2.10,py39-2.11
-            PREFIX: PYTEST_REQPASS=3
+            python-version: 3.8
           - name: packaging
             tox_env: packaging
+            python-version: 3.8
+          # - tox_env: docs
+          - name: py38
+            tox_env: py38,py38-devel
+            PREFIX: PYTEST_REQPASS=3
+            python-version: 3.8
+          - name: py39
+            tox_env: py39,py39-devel
+            PREFIX: PYTEST_REQPASS=3
+            python-version: 3.9
 
     steps:
       - name: Check out src from Git
@@ -44,24 +49,17 @@ jobs:
         with:
           fetch-depth: 0 # needed by setuptools-scm
 
-      - name: Find python version
-        id: py_ver
-        shell: python
-        run: |
-          v = '${{ matrix.tox_env }}'.split('-')[0].lstrip('py')
-          print('::set-output name=version::{0}.{1}'.format(v[0],v[1:]))
-
       - name: Enable caching of ~/.cache/pip
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ steps.py_ver.outputs.version }}-${{ hashFiles('**/setup.cfg', 'tox.ini', '.github/workflows/tox.yml') }}
+          key: ${{ matrix.name }}-${{ hashFiles('**/setup.cfg', 'tox.ini', '.github/workflows/tox.yml') }}
 
       - name: Enable caching of ~/.cache/pre-commit
         uses: actions/cache@v2
         with:
           path: ~/.cache/pre-commit
-          key: ${{ steps.py_ver.outputs.version }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          key: ${{ matrix.name }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Enable caching for ansible tools
         uses: actions/cache@v2
@@ -75,26 +73,25 @@ jobs:
       - name: Install system dependencies
         # community.docker requires docker>=5.0.0 but ubuntu has older
         run: |
-          sudo apt-get update \
-          && sudo apt-get install -y ansible python3-docker python3-requests \
-          && sudo pip3 install -U docker \
-          && ansible-doc -l | grep docker_container
+          set -ex
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+          sudo apt-get update
+          docker --version
+          docker info
 
       # Even our lint and other envs need access to tox
-      - name: Install a default Python
-        uses: actions/setup-python@v2
-        if: ${{ ! contains(matrix.tox_env, 'py') }}
-      # Be sure to install the version of python needed by a specific test, if necessary
-      - name: Set up Python version
-        uses: actions/setup-python@v2
-        if: ${{ contains(matrix.tox_env, 'py') }}
+      - name: Install python
+        uses: actions/setup-python@v4
         with:
-          python-version: ${{ steps.py_ver.outputs.version }}
+          python-version: ${{ matrix.python-version }}
+
       - name: Install dependencies
         run: |
           docker version
           docker info
           python -m pip install -U "pip>=21.2.4" "tox>=3.24.2"
+
       - name: Run tox -e ${{ matrix.tox_env }}
         run: |
           echo "${{ matrix.PREFIX }} tox -e ${{ matrix.tox_env }}"
