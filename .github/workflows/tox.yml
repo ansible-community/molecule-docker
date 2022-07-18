@@ -42,6 +42,14 @@ jobs:
             tox_env: py39,py39-devel
             PREFIX: PYTEST_REQPASS=3
             python-version: 3.9
+          - name: py310
+            tox_env: py310,py310-devel
+            PREFIX: PYTEST_REQPASS=3
+            python-version: "3.10"
+          - name: py311
+            tox_env: py311,py311-devel
+            PREFIX: PYTEST_REQPASS=3
+            python-version: "~3.11.0-0"
 
     steps:
       - name: Check out src from Git
