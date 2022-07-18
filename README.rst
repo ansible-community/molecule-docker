@@ -49,6 +49,22 @@ Get Involved
 .. _`ansible-announce list`: https://groups.google.com/group/ansible-announce
 .. _`communication page`: https://docs.ansible.com/ansible/latest/community/communication.html
 
+.. _faq:
+
+FAQ
+============
+
+Q: How can I use Docker Context?
+
+A: ``molecule-docker`` depends directly on
+`community.docker.docker_container`_. Currently, `Docker Context` is not
+supported, but as a workaround,
+`docker_host in community.docker.docker_container`_ can be used to connect to
+the Docker API.
+
+.. _`community.docker.docker_container`: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_container_module.html
+.. _`docker_host in community.docker.docker_container`: https://docs.ansible.com/ansible/latest/collections/community/docker/docker_container_module.html#parameter-docker_host
+
 .. _license:
 
 License
