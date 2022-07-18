@@ -264,4 +264,5 @@ class Docker(Driver):
     @property
     def required_collections(self) -> Dict[str, str]:
         """Return collections dict containing names and versions required."""
-        return {"community.docker": "1.9.1"}
+        # https://galaxy.ansible.com/community/docker
+        return {"community.docker": "3.0.0-a2"}
