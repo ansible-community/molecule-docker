@@ -1,6 +1,7 @@
 ---
 - name: Create
   hosts: localhost
+  become: "{{ molecule_yml.driver.become | default(false) }}"
   connection: local
   gather_facts: false
   no_log: "{{ molecule_no_log }}"
