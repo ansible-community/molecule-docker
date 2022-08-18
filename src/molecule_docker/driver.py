@@ -74,6 +74,7 @@ class Docker(Driver):
             privileged: True|False
             security_opts:
               - seccomp=unconfined
+            cgroupns_mode: host|private
             devices:
               - /dev/fuse:/dev/fuse:rwm
             volumes:
@@ -134,6 +135,12 @@ class Docker(Driver):
     .. note:: Do note that running containers in privileged mode is considerably
               less secure. For details, please reference `Docker Security
               Configuration`_
+
+    .. note:: On some systems (macOS) you might have to set ``cgroupns_mode`` to
+              ``host`` for `systemd` to work. See `Docker Desktop release
+              notes`_ for more information.
+
+    .. _`Docker Desktop release notes`: https://docs.docker.com/desktop/release-notes/#bug-fixes-and-minor-changes-19
 
     .. note:: With the environment variable ``DOCKER_HOST`` the user can bind
               Molecule to a different `Docker`_ socket than the default
