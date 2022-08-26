@@ -35,7 +35,7 @@ jobs:
             python-version: 3.8
           # - tox_env: docs
           - name: py38
-            tox_env: py38,py38-devel
+            tox_env: py38
             PREFIX: PYTEST_REQPASS=3
             python-version: 3.8
           - name: py39
