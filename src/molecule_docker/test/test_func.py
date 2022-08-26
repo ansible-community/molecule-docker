@@ -60,3 +60,11 @@ def test_command_static_scenario() -> None:
 
     result = run_command(cmd)
     assert result.returncode == 0
+
+
+def test_dockerfile_with_context() -> None:
+    """Verify that Dockerfile.j2 with context works."""
+    with change_dir_to("src/molecule_docker/test/scenarios/with-context"):
+        cmd = ["molecule", "--debug", "test"]
+        result = run_command(cmd)
+        assert result.returncode == 0
