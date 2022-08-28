@@ -16,7 +16,7 @@
         registry: "{{ item.registry.url }}"
         docker_host: "{{ item.docker_host | default(lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock') }}"
         cacert_path: "{{ item.cacert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/ca.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
-        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem')  if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
+        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         key_path: "{{ item.key_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/key.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         tls_verify: "{{ item.tls_verify | default(lookup('env', 'DOCKER_TLS_VERIFY')) or false }}"
       with_items: "{{ molecule_yml.platforms }}"
@@ -28,7 +28,7 @@
 
     - name: Check presence of custom Dockerfiles
       ansible.builtin.stat:
-        path: "{{ molecule_scenario_directory + '/' + (item.dockerfile | default( 'Dockerfile.j2')) }}"
+        path: "{{ molecule_scenario_directory + '/' + (item.dockerfile | default('Dockerfile.j2')) }}"
       loop: "{{ molecule_yml.platforms }}"
       register: dockerfile_stats
 
@@ -37,7 +37,7 @@
         # when using embedded playbooks the dockerfile is alonside them
         src: >-
           {%- if dockerfile_stats.results[i].stat.exists -%}
-          {{ molecule_scenario_directory + '/' + (item.dockerfile | default( 'Dockerfile.j2')) }}
+          {{ molecule_scenario_directory + '/' + (item.dockerfile | default('Dockerfile.j2')) }}
           {%- else -%}
           {{ playbook_dir + '/Dockerfile.j2' }}
           {%- endif -%}
@@ -69,7 +69,7 @@
         name: "molecule_local/{{ item.item.name }}"
         docker_host: "{{ item.item.docker_host | default(lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock') }}"
         cacert_path: "{{ item.cacert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/ca.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
-        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem')  if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
+        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         key_path: "{{ item.key_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/key.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         tls_verify: "{{ item.tls_verify | default(lookup('env', 'DOCKER_TLS_VERIFY')) or false }}"
       with_items: "{{ platforms.results }}"
@@ -92,7 +92,7 @@
         name: "molecule_local/{{ item.item.image }}"
         docker_host: "{{ item.item.docker_host | default(lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock') }}"
         cacert_path: "{{ item.cacert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/ca.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
-        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem')  if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
+        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         key_path: "{{ item.key_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/key.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         tls_verify: "{{ item.tls_verify | default(lookup('env', 'DOCKER_TLS_VERIFY')) or false }}"
         force_source: "{{ item.item.force | default(true) }}"
@@ -117,7 +117,7 @@
       ansible.builtin.set_fact:
         command_directives_dict: >-
           {{ command_directives_dict | default({}) |
-             combine({ item.name: item.command | default('bash -c "while true; do sleep 10000; done"') })
+             combine({item.name: item.command | default('bash -c "while true; do sleep 10000; done"')})
           }}
       with_items: "{{ molecule_yml.platforms }}"
       when: item.override_command | default(true)
@@ -127,7 +127,7 @@
         name: "{{ item.name }}"
         docker_host: "{{ item.docker_host | default(lookup('env', 'DOCKER_HOST') or 'unix://var/run/docker.sock') }}"
         cacert_path: "{{ item.cacert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/ca.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
-        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem')  if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
+        cert_path: "{{ item.cert_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/cert.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         key_path: "{{ item.key_path | default((lookup('env', 'DOCKER_CERT_PATH') + '/key.pem') if lookup('env', 'DOCKER_CERT_PATH') else omit) }}"
         tls_verify: "{{ item.tls_verify | default(lookup('env', 'DOCKER_TLS_VERIFY')) or false }}"
         hostname: "{{ item.hostname | default(item.name) }}"
