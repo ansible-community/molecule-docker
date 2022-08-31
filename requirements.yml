@@ -1,6 +1,6 @@
 # helps ansible-lint install required collection when it is missing
 collections:
   - name: community.docker
-    version: ">=1.9.1"
+    version: ">=3.0.2"
   - name: ansible.posix
     version: ">=1.4.0"
