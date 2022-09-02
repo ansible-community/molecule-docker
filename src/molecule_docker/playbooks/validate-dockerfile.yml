@@ -17,7 +17,7 @@
       ansible.builtin.pip:
         name: docker
 
-    - name: create temporary dockerfiles
+    - name: Create temporary dockerfiles
       ansible.builtin.tempfile:
         prefix: "molecule-dockerfile-{{ item.image | replace('/', '-') }}"
         suffix: build
@@ -26,7 +26,7 @@
       loop_control:
         label: "{{ item.image }}"
 
-    - name: expand Dockerfile templates
+    - name: Expand Dockerfile templates
       ansible.builtin.template:
         src: Dockerfile.j2
         dest: "{{ temp_dockerfiles.results[index].path }}"
