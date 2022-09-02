@@ -1,6 +1,7 @@
 #!/usr/bin/env ansible-playbook
 ---
-- hosts: localhost
+- name: Validate dockerfile
+  hosts: localhost
   connection: local
   gather_facts: false
   vars:
