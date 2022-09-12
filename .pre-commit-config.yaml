@@ -65,7 +65,7 @@ repos:
           - packaging
           - types-requests
   - repo: https://github.com/PyCQA/pylint
-    rev: v2.15.0
+    rev: v2.15.2
     hooks:
       - id: pylint
         additional_dependencies:
