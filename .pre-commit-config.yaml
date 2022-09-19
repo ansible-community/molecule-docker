@@ -42,7 +42,7 @@ repos:
           - flake8-docstrings>=1.6.0
         language_version: python3
   - repo: https://github.com/ansible/ansible-lint.git
-    rev: v6.5.2
+    rev: v6.6.0
     hooks:
       - id: ansible-lint
         always_run: true
@@ -65,7 +65,7 @@ repos:
           - packaging
           - types-requests
   - repo: https://github.com/PyCQA/pylint
-    rev: v2.15.2
+    rev: v2.15.3
     hooks:
       - id: pylint
         additional_dependencies:
