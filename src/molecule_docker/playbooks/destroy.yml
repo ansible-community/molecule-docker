@@ -5,6 +5,11 @@
   gather_facts: false
   no_log: "{{ molecule_no_log }}"
   tasks:
+    - name: Set async_dir for HOME env
+      ansible.builtin.set_fact:
+        ansible_async_dir: "{{ lookup('env','HOME') }}/.ansible_async'"
+      when: (lookup('env','HOME'))
+
     - name: Destroy molecule instance(s)
       community.docker.docker_container:
         name: "{{ item.name }}"
@@ -34,7 +39,6 @@
       loop: "{{ server.results }}"
       loop_control:
         label: "{{ item.item.name }}"
-
 
     - name: Delete docker networks(s)
       include_tasks: tasks/delete_network.yml
