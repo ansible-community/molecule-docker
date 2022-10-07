@@ -2,7 +2,7 @@
 driver:
   name: docker
 platforms:
-  - name: instance-${BUILD_ID:-local}
+  - name: instance-${DOES_NOT_EXIST:-local}
     image: env-substitution
     dockerfile: Dockerfile.j2
     pre_build_image: false
