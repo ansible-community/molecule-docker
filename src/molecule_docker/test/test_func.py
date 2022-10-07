@@ -68,3 +68,11 @@ def test_dockerfile_with_context() -> None:
         cmd = ["molecule", "--debug", "test"]
         result = run_command(cmd)
         assert result.returncode == 0
+
+
+def test_env_substitution() -> None:
+    """Verify that env variables in molecule.yml are replaced properly."""
+    with change_dir_to("src/molecule_docker/test/scenarios/env-substitution"):
+        cmd = ["molecule", "--debug", "test"]
+        result = run_command(cmd)
+        assert result.returncode == 0
