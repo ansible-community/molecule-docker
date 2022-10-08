@@ -41,7 +41,7 @@
         label: "{{ item.item.name }}"
 
     - name: Delete docker networks(s)
-      include_tasks: tasks/delete_network.yml
+      ansible.builtin.include_tasks: tasks/delete_network.yml
       loop: "{{ molecule_yml.platforms | molecule_get_docker_networks() }}"
       loop_control:
         label: "{{ item.name }}"
