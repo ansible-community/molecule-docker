@@ -1,8 +1,8 @@
 """Functional tests."""
+import os
 import pathlib
 import shutil
 import subprocess
-import os
 
 from molecule import logger
 from molecule.test.conftest import change_dir_to
