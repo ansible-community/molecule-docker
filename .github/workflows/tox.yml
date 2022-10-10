@@ -36,19 +36,19 @@ jobs:
           # - tox_env: docs
           - name: py38
             tox_env: py38
-            PREFIX: PYTEST_REQPASS=4
+            PREFIX: PYTEST_REQPASS=5
             python-version: 3.8
           - name: py39
             tox_env: py39,py39-devel
-            PREFIX: PYTEST_REQPASS=4
+            PREFIX: PYTEST_REQPASS=5
             python-version: 3.9
           - name: py310
             tox_env: py310,py310-devel
-            PREFIX: PYTEST_REQPASS=4
+            PREFIX: PYTEST_REQPASS=5
             python-version: "3.10"
           - name: py311
             tox_env: py311,py311-devel
-            PREFIX: PYTEST_REQPASS=4
+            PREFIX: PYTEST_REQPASS=5
             python-version: "~3.11.0-0"
 
     steps:
