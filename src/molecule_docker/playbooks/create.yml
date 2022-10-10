@@ -39,7 +39,7 @@
 
     - name: Create Dockerfiles from image names
       ansible.builtin.template:
-        # when using embedded playbooks the dockerfile is alonside them
+        # when using embedded playbooks the dockerfile is alongside them
         src: "{%- if dockerfile_stats.results[i].stat.exists -%}\
           {{ molecule_scenario_directory + '/' + (item.dockerfile | default('Dockerfile.j2')) }}\
           {%- else -%}\
@@ -61,6 +61,8 @@
           {{ playbook_dir + '/' }}\
           {%- endif -%}"
         dest: "{{ molecule_ephemeral_directory }}"
+        rsync_opts:
+          - "--exclude=molecule.yml"
       loop: "{{ molecule_yml.platforms }}"
       loop_control:
         index_var: i

@@ -3,8 +3,7 @@ driver:
   name: docker
 platforms:
   - name: instance-${DOES_NOT_EXIST:-local}
-    image: env-substitution
-    dockerfile: Dockerfile.j2
+    image: ${MOLECULE_ROLE_IMAGE:-centos:7}
     pre_build_image: false
 provisioner:
   name: ansible

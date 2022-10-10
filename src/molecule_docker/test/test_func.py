@@ -2,6 +2,7 @@
 import pathlib
 import shutil
 import subprocess
+import os
 
 from molecule import logger
 from molecule.test.conftest import change_dir_to
@@ -43,7 +44,7 @@ def test_command_init_and_test_scenario(tmp_path: pathlib.Path, DRIVER: str) -> 
 
         # run molecule reset as this may clean some leftovers from other
         # test runs and also ensure that reset works.
-        result = run_command(["molecule", "reset"])  # default sceanario
+        result = run_command(["molecule", "reset"])  # default scenario
         assert result.returncode == 0
 
         result = run_command(["molecule", "reset", "-s", scenario_name])
@@ -72,6 +73,7 @@ def test_dockerfile_with_context() -> None:
 
 def test_env_substitution() -> None:
     """Verify that env variables in molecule.yml are replaced properly."""
+    os.environ["MOLECULE_ROLE_IMAGE"] = "debian:bullseye"
     with change_dir_to("src/molecule_docker/test/scenarios/env-substitution"):
         cmd = ["molecule", "--debug", "test"]
         result = run_command(cmd)
