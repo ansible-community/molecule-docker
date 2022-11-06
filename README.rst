@@ -37,14 +37,14 @@ Get Involved
 ============
 
 * Join us in the ``#ansible-devtools`` channel on `Libera`_.
-* Join user discussions in `Molecule discussions`_.
+* Join user discussions in `Molecule Docker discussions`_.
 * Join the community working group by checking the `wiki`_.
 * Want to know about releases, subscribe to `ansible-announce list`_.
 * For the full list of Ansible email Lists, IRC channels see the
   `communication page`_.
 
 .. _`Libera`: https://web.libera.chat/?channel=#ansible-devtools
-.. _`Molecule discussions`: https://github.com/ansible-community/molecule/discussions
+.. _`Molecule Docker discussions`: https://github.com/ansible-community/molecule-docker/discussions
 .. _`wiki`: https://github.com/ansible/community/wiki/Molecule
 .. _`ansible-announce list`: https://groups.google.com/group/ansible-announce
 .. _`communication page`: https://docs.ansible.com/ansible/latest/community/communication.html
